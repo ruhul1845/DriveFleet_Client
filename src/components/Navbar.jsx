@@ -1,11 +1,12 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Menu, X, Car, UserCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut, useSession } from "@/lib/auth-client";
-import { apiFetch } from "@/lib/api";
+import { apiFetch, clearServerToken } from "@/lib/api";
 
 const nav = [
   ["Home", "/"],
@@ -23,6 +24,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     await signOut();
+    clearServerToken();
     try { await apiFetch("/api/auth/logout", { method: "POST" }); } catch {}
     toast.success("Logged out successfully");
     router.push("/login");
@@ -42,7 +44,17 @@ export default function Navbar() {
           {user ? (
             <div className="relative">
               <button onClick={() => setProfile(!profile)} className="btn-outline !px-3">
-                {user.image ? <img src={user.image} alt={user.name || "User"} className="h-8 w-8 rounded-full object-cover" /> : <UserCircle className="h-8 w-8" />}
+                {user.image ? (
+                  <Image
+                    src={user.image}
+                    alt={user.name || "User"}
+                    width={32}
+                    height={32}
+                    className="h-8 w-8 rounded-full object-cover"
+                  />
+                ) : (
+                  <UserCircle className="h-8 w-8" />
+                )}
                 <span>{user.name || "Profile"}</span>
               </button>
               {profile && <div className="absolute right-0 mt-3 w-56 overflow-hidden rounded-2xl border bg-white shadow-xl">
