@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Menu, X, Car, UserCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut, useSession } from "@/lib/auth-client";
-import { apiFetch, clearServerToken } from "@/lib/api";
+// import { apiFetch, clearServerToken } from "@/lib/api";
 
 const nav = [
   ["Home", "/"],
@@ -24,8 +24,8 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     await signOut();
-    clearServerToken();
-    try { await apiFetch("/api/auth/logout", { method: "POST" }); } catch {}
+    // clearServerToken();
+    // try { await apiFetch("/api/auth/logout", { method: "POST" }); } catch {}
     toast.success("Logged out successfully");
     router.push("/login");
   };

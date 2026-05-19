@@ -6,7 +6,7 @@ import PrivateRoute from "@/components/PrivateRoute";
 import Loading from "@/components/Loading";
 import CarCard from "@/components/CarCard";
 import CarForm from "@/components/CarForm";
-import { apiFetch } from "@/lib/api";
+import { apiFetch, getMyCars } from "@/lib/api";
 
 function MyAddedCarsContent() {
   const [cars, setCars] = useState([]);
@@ -14,12 +14,16 @@ function MyAddedCarsContent() {
   const [edit, setEdit] = useState(null);
   const [del, setDel] = useState(null);
 
-  const load = useCallback(() => {
+  const load = useCallback(async () => {
     setLoading(true);
-    apiFetch("/api/cars/my")
-      .then((d) => setCars(d.cars || []))
-      .catch((err) => toast.error(err.message))
-      .finally(() => setLoading(false));
+    try {
+      const list = await getMyCars();
+      setCars(list);
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {

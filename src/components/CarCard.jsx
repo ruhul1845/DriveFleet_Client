@@ -11,6 +11,7 @@ export default function CarCard({ car, ownerActions, onEdit, onDelete }) {
           src={car.image || DEFAULT_CAR_IMAGE}
           alt={car.name}
           fill
+          loading="lazy"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition duration-300 hover:scale-105"
         />

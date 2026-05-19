@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import PrivateRoute from "@/components/PrivateRoute";
 import Loading from "@/components/Loading";
-import { apiFetch } from "@/lib/api";
+import { getMyBookings } from "@/lib/api";
 
 function MyBookingsContent() {
   const [items, setItems] = useState([]);
@@ -13,17 +13,18 @@ function MyBookingsContent() {
   useEffect(() => {
     let cancelled = false;
 
-    apiFetch("/api/bookings/my")
-      .then((d) => {
-        if (!cancelled) setItems(d.bookings || []);
-      })
-      .catch((err) => {
+    async function loadBookings() {
+      try {
+        const bookings = await getMyBookings();
+        if (!cancelled) setItems(bookings);
+      } catch (err) {
         if (!cancelled) toast.error(err.message);
-      })
-      .finally(() => {
+      } finally {
         if (!cancelled) setLoading(false);
-      });
+      }
+    }
 
+    loadBookings();
     return () => {
       cancelled = true;
     };

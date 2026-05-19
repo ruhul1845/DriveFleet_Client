@@ -6,7 +6,8 @@ import { useParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Loading from "@/components/Loading";
 import BookingModal from "@/components/BookingModal";
-import { apiFetch, syncServerToken } from "@/lib/api";
+import { getCar } from "@/lib/api";
+// import { syncServerToken } from "@/lib/api";
 import { useSession } from "@/lib/auth-client";
 import { DEFAULT_CAR_IMAGE } from "@/lib/images";
 
@@ -19,9 +20,24 @@ export default function CarDetails() {
   const { data: session } = useSession();
 
   useEffect(() => {
-    apiFetch(`/api/cars/${id}`)
-      .then((d) => setCar(d.car))
-      .finally(() => setLoading(false));
+    let cancelled = false;
+
+    async function loadCar() {
+      setLoading(true);
+      try {
+        const data = await getCar(id);
+        if (!cancelled) setCar(data);
+      } catch {
+        if (!cancelled) setCar(null);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    loadCar();
+    return () => {
+      cancelled = true;
+    };
   }, [id]);
 
   if (loading) return <Loading />;
@@ -39,7 +55,7 @@ export default function CarDetails() {
       router.push("/login");
       return;
     }
-    await syncServerToken(session.user);
+    // await syncServerToken(session.user);
     setModal(true);
   };
 
@@ -81,9 +97,16 @@ export default function CarDetails() {
         <BookingModal
           car={car}
           user={session.user}
-          onClose={(done) => {
+          onClose={async (done) => {
             setModal(false);
-            if (done) apiFetch(`/api/cars/${id}`).then((d) => setCar(d.car));
+            if (done) {
+              try {
+                const updated = await getCar(id);
+                setCar(updated);
+              } catch {
+                /* keep current car data */
+              }
+            }
           }}
         />
       )}
