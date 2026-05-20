@@ -1,2 +1,0 @@
-import Link from "next/link";
-export default function NotFound(){return <section className="container-page grid min-h-[65vh] place-items-center text-center"><div><h1 className="text-8xl font-black text-amber-500">404</h1><h2 className="mt-4 text-3xl font-black">Road not found</h2><p className="mt-2 text-slate-600">The route you requested does not exist in DriveFleet.</p><Link href="/" className="btn-primary mt-6">Back to Home</Link></div></section>}
