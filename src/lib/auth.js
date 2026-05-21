@@ -3,27 +3,49 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
-if (!uri) throw new Error("MONGODB_URI is missing");
+
+if (!uri) {
+  throw new Error("MONGODB_URI is missing");
+}
 
 const client = new MongoClient(uri);
 const db = client.db("DriveFleet");
 
 export const auth = betterAuth({
   database: mongodbAdapter(db),
+
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: process.env.BETTER_AUTH_URL,
-  emailAndPassword: { enabled: true },
+
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://drive-fleet-client.vercel.app",
+  ],
+
+  emailAndPassword: {
+    enabled: true,
+  },
+
   user: {
     additionalFields: {
-      image: { type: "string", required: false }
-    }
+      image: {
+        type: "string",
+        required: false,
+      },
+    },
   },
+
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google"],
+    },
+  },
+
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-      linkAccount: true,
-    }
+    },
   },
-  trustedOrigins: ["http://localhost:3000"]
 });

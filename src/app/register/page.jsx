@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { signIn, signUp } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Register() {
   const router = useRouter();
@@ -88,7 +89,7 @@ export default function Register() {
         throw new Error(res.error.message || "Google login failed");
       }
 
-      toast.success("Login with Google successful");
+      toast.success("Redirecting to Google for authentication...");
     } catch (err) {
       toast.error(err.message || "Google login failed");
       setGoogleLoading(false);
@@ -163,6 +164,7 @@ export default function Register() {
           disabled={googleLoading}
           className="btn-outline mt-3 w-full"
         >
+          <FcGoogle className="text-xl" />
           {googleLoading ? "Redirecting..." : "Continue with Google"}
         </button>
 

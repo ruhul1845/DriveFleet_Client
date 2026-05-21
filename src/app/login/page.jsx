@@ -6,6 +6,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { signIn } from "@/lib/auth-client";
 import { syncServerToken } from "@/lib/api";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
   const router = useRouter();
@@ -57,7 +58,7 @@ export default function Login() {
         throw new Error(res.error.message || "Google login failed");
       }
 
-      toast.success("Login with Google successful");
+      toast.success("Redirecting to Google for authentication...");
     } catch (err) {
       toast.error(err.message || "Google login failed");
       setGoogleLoading(false);
@@ -105,6 +106,7 @@ export default function Login() {
           disabled={googleLoading}
           className="btn-outline mt-3 w-full"
         >
+          <FcGoogle className="text-xl" />
           {googleLoading ? "Redirecting..." : "Continue with Google"}
         </button>
 
