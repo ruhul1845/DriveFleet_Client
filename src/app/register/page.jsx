@@ -88,7 +88,7 @@ export default function Register() {
         throw new Error(res.error.message || "Google login failed");
       }
 
-      toast.success("Redirecting to Google...");
+      toast.success("Login with Google successful");
     } catch (err) {
       toast.error(err.message || "Google login failed");
       setGoogleLoading(false);
