@@ -44,7 +44,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-white/10 p-4 shadow-2xl backdrop-blur">
+          <div className=" borderborder-slate-700">
             <img
               className="h-[420px] w-full rounded-[1.5rem] object-cover"
               src="https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1200&q=80"
