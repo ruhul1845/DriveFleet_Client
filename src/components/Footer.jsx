@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { FaFacebook } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
 
 export default function Footer() {
   return (
@@ -10,10 +14,10 @@ export default function Footer() {
             Modern rentals for weekend drives, office trips, family tours, and premium city movement.
           </p>
           <div className="mt-5 flex gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-sm font-bold">f</span>
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-sm font-bold">IG</span>
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-sm font-bold">X</span>
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-sm font-bold">in</span>
+            <FaFacebook />
+            <FaLinkedinIn />
+            <FaXTwitter />
+
           </div>
         </div>
         <div>
@@ -27,7 +31,7 @@ export default function Footer() {
         <div>
           <h4 className="font-bold">Contact Information</h4>
           <p className="mt-3 text-slate-300">
-            Dhaka, Bangladesh<br />support@drivefleet.com<br />+880 1700 000 000
+            Dhaka, Bangladesh<br />support@drivefleet.com<br />+880 1834340813
           </p>
         </div>
       </div>

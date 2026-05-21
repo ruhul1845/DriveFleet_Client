@@ -10,18 +10,19 @@
   },
   "dependencies": {
     "better-auth": "latest",
+    "framer-motion": "latest",
+    "lucide-react": "latest",
     "mongodb": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-hot-toast": "latest",
-    "lucide-react": "latest",
-    "framer-motion": "latest"
+    "react-icons": "^5.6.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "latest",
-    "tailwindcss": "latest",
     "eslint": "latest",
-    "eslint-config-next": "latest"
+    "eslint-config-next": "latest",
+    "tailwindcss": "latest"
   }
 }
