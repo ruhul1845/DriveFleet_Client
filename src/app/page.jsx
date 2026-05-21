@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="bg-[radial-gradient(circle_at_top_right,#fde68a,transparent_35%),linear-gradient(135deg,#0f172a,#1e293b)] py-20 text-white">
+      <section className="bg-[radial-gradient(circle_at_top_right,#123b7a_0%,transparent_35%),linear-gradient(135deg,#040218_0%,#07142f_50%,#0b2a5b_100%)] py-20 text-white">
         <div className="container-page grid items-center gap-10 lg:grid-cols-2">
           <div>
             <p className="mb-4 font-black uppercase tracking-[.25em] text-amber-300">
