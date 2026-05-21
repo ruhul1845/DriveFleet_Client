@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X, Car, UserCircle } from "lucide-react";
+import { PiCarProfileDuotone } from "react-icons/pi";
 import toast from "react-hot-toast";
 import { signOut, useSession } from "@/lib/auth-client";
 import { apiFetch } from "@/lib/api";
@@ -21,6 +22,7 @@ export default function Navbar() {
 
   const { data: session } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
 
   const user = session?.user;
 
@@ -42,18 +44,18 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="container-page flex h-20 items-center justify-between">
-        {/* Desktop Logo */}
+
         <Link
           href="/"
           className="hidden items-center gap-2 text-2xl font-black tracking-tight lg:flex"
         >
           <span className="grid h-11 w-11 place-items-center rounded-2xl bg-amber-400 text-slate-950">
-            <Car />
+            <PiCarProfileDuotone />
           </span>
           DriveFleet
         </Link>
 
-        {/* Mobile Left Side */}
+
         <div className="flex items-center gap-3 lg:hidden">
           {user ? (
             <>
@@ -78,20 +80,27 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Desktop Navigation */}
+
         <nav className="hidden items-center gap-7 lg:flex">
-          {nav.map(([label, href]) => (
-            <Link
-              key={href}
-              href={href}
-              className="font-semibold text-slate-700 hover:text-amber-600"
-            >
-              {label}
-            </Link>
-          ))}
+          {nav.map(([label, href]) => {
+            const active = pathname === href;
+
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`border-b-2 pb-1 font-semibold transition ${active
+                    ? "border-amber-500 text-amber-600"
+                    : "border-transparent text-slate-700 hover:border-amber-300 hover:text-amber-600"
+                  }`}
+              >
+                {label}
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Desktop Profile/Login */}
+
         <div className="hidden items-center gap-3 lg:flex">
           {user ? (
             <div className="relative">
@@ -156,13 +165,13 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
+
         <button className="lg:hidden" onClick={() => setOpen(!open)}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+
       {open && (
         <div className="border-t bg-white p-4 lg:hidden">
           <div className="container-page grid gap-3">
