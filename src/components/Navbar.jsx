@@ -34,15 +34,18 @@ export default function Navbar() {
     } catch { }
 
     toast.success("Logged out successfully");
+    setOpen(false);
+    setProfile(false);
     router.push("/login");
   };
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="container-page flex h-20 items-center justify-between">
+        {/* Desktop Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 text-2xl font-black tracking-tight"
+          className="hidden items-center gap-2 text-2xl font-black tracking-tight lg:flex"
         >
           <span className="grid h-11 w-11 place-items-center rounded-2xl bg-amber-400 text-slate-950">
             <Car />
@@ -50,6 +53,32 @@ export default function Navbar() {
           DriveFleet
         </Link>
 
+        {/* Mobile Left Side */}
+        <div className="flex items-center gap-3 lg:hidden">
+          {user ? (
+            <>
+              <span className="max-w-[170px] truncate text-base font-black text-slate-800">
+                Hi, {user.name || "User"}
+              </span>
+
+              {user.image ? (
+                <img
+                  src={user.image}
+                  alt={user.name || "User"}
+                  className="h-11 w-11 rounded-full border border-slate-200 object-cover"
+                />
+              ) : (
+                <UserCircle className="h-11 w-11 text-slate-600" />
+              )}
+            </>
+          ) : (
+            <Link href="/" className="text-xl font-black text-slate-900">
+              DriveFleet
+            </Link>
+          )}
+        </div>
+
+        {/* Desktop Navigation */}
         <nav className="hidden items-center gap-7 lg:flex">
           {nav.map(([label, href]) => (
             <Link
@@ -62,12 +91,13 @@ export default function Navbar() {
           ))}
         </nav>
 
+        {/* Desktop Profile/Login */}
         <div className="hidden items-center gap-3 lg:flex">
           {user ? (
             <div className="relative">
               <button
                 onClick={() => setProfile(!profile)}
-                className="flex items-center gap-3 rounded-full px-2 py-1 transition "
+                className="flex items-center gap-3 rounded-full px-2 py-1 transition"
               >
                 <span className="text-sm font-bold text-slate-700">
                   Hi, {user.name || "User"}
@@ -126,11 +156,13 @@ export default function Navbar() {
           )}
         </div>
 
+        {/* Mobile Menu Button */}
         <button className="lg:hidden" onClick={() => setOpen(!open)}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
 
+      {/* Mobile Menu */}
       {open && (
         <div className="border-t bg-white p-4 lg:hidden">
           <div className="container-page grid gap-3">
@@ -147,22 +179,6 @@ export default function Navbar() {
 
             {user ? (
               <>
-                <div className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-3">
-                  {user.image ? (
-                    <img
-                      src={user.image}
-                      alt={user.name || "User"}
-                      className="h-11 w-11 rounded-full border border-slate-200 object-cover"
-                    />
-                  ) : (
-                    <UserCircle className="h-11 w-11 text-slate-600" />
-                  )}
-
-                  <span className="font-bold text-slate-700">
-                    Hi, {user.name || "User"}
-                  </span>
-                </div>
-
                 <Link
                   href="/my-added-cars"
                   onClick={() => setOpen(false)}
@@ -179,7 +195,11 @@ export default function Navbar() {
                 </button>
               </>
             ) : (
-              <Link href="/login" className="btn-primary">
+              <Link
+                href="/login"
+                onClick={() => setOpen(false)}
+                className="btn-primary"
+              >
                 Login
               </Link>
             )}
