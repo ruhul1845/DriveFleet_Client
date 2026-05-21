@@ -17,9 +17,7 @@ export default async function HomeCars() {
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="section-title">Available Cars</h2>
-          <p className="mt-2 text-slate-600">
-            Live vehicles loaded from MongoDB database.
-          </p>
+
         </div>
 
         <Link className="btn-outline" href="/explore-cars">
